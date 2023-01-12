@@ -4,12 +4,31 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] GameObject enemyPrefab;
+    [SerializeField] GameObject  enemyPrefab;
     float spawnRange = 9f;
+    public int enemyCount;
 
     void Start()
     {
-        Instantiate(enemyPrefab, GenerateRandomPos(), enemyPrefab.transform.rotation);
+        SpawnEnemyWave(2);
+    }
+
+    void Update()
+    {
+        enemyCount = FindObjectsOfType<EnemyAI>().Length;
+
+        if (enemyCount == 0)
+        {
+            SpawnEnemyWave(1);
+        }
+    }
+
+    private void SpawnEnemyWave(int enemiesToSpawn)
+    {
+        for (int i = 0; i < enemiesToSpawn; i++)
+        {
+            Instantiate(enemyPrefab, GenerateRandomPos(), enemyPrefab.transform.rotation);
+        }
     }
 
     private Vector3 GenerateRandomPos()
@@ -19,10 +38,5 @@ public class SpawnManager : MonoBehaviour
 
         Vector3 randomPos = new Vector3(spawnRangeX, 0, spawnRangeZ);
         return randomPos;
-    }
-
-    void Update()
-    {
-        
     }
 }
