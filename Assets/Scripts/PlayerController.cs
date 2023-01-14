@@ -8,6 +8,12 @@ public class PlayerController : MonoBehaviour
     GameObject focalPoint;
     public bool hasPowerUP = false;
 
+    public PowerUpType currentPowerUp;
+    public GameObject rocketPrefab;
+
+    GameObject tmpRocket;
+    Coroutine powerupCountdown;
+
     [SerializeField] float speed = 10f;
     [SerializeField] float powerUpForce = 15f;
     [SerializeField] GameObject powerUpIndicator;
