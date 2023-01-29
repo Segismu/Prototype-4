@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float powerUpForce = 15f;
     [SerializeField] GameObject powerUpIndicator;
 
+
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
@@ -30,6 +31,11 @@ public class PlayerController : MonoBehaviour
 
         playerRb.AddForce(focalPoint.transform.forward * speed * forwardInput);
         powerUpIndicator.transform.position = transform.position + new Vector3(0, -0.5f, 0);
+
+        if (transform.position.y < -10)
+        {
+            //Load Game Over Scene
+        }
     }
 
     private void OnTriggerEnter(Collider other)
