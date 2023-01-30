@@ -7,10 +7,12 @@ public class PlayerController : MonoBehaviour
     Rigidbody playerRb;
     GameObject focalPoint;
     public bool hasPowerUP = false;
+    public bool isPlayerOn = true;
+
 
     public PowerUpType currentPowerUp;
-    public GameObject rocketPrefab;
 
+    GameManager gameManager;
     GameObject tmpRocket;
     Coroutine powerupCountdown;
 
@@ -21,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
         playerRb = GetComponent<Rigidbody>();
         focalPoint = GameObject.Find("FocalPoint");
     }
@@ -31,11 +34,6 @@ public class PlayerController : MonoBehaviour
 
         playerRb.AddForce(focalPoint.transform.forward * speed * forwardInput);
         powerUpIndicator.transform.position = transform.position + new Vector3(0, -0.5f, 0);
-
-        if (transform.position.y < -10)
-        {
-            //Load Game Over Scene
-        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -46,6 +44,11 @@ public class PlayerController : MonoBehaviour
             powerUpIndicator.gameObject.SetActive(true);
             Destroy(other.gameObject);
             StartCoroutine(PowerUpCountdown());
+        }
+
+        if(other.CompareTag("FallDetector"))
+        {
+            gameManager.Restart();
         }
     }
 

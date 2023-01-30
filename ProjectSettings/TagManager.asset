@@ -9,6 +9,7 @@ TagManager:
   - Powerup
   - PlayerGoal
   - EnemyGoal
+  - FallDetector
   layers:
   - Default
   - TransparentFX

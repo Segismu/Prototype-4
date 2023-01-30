@@ -8,8 +8,11 @@ public class EnemyAI : MonoBehaviour
     Rigidbody enemyRb;
     GameObject player;
 
+    PlayerController playerController;
+
     void Start()
     {
+        playerController = FindObjectOfType<PlayerController>();
         enemyRb = GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
     }
@@ -17,10 +20,20 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        Vector3 lookDirection = (player.transform.position - transform.position).normalized;
-        enemyRb.AddForce (lookDirection * speed);
+        if (playerController.isPlayerOn == true)
+        {
+            Vector3 lookDirection = (player.transform.position - transform.position).normalized;
+            enemyRb.AddForce(lookDirection * speed);
+        }
+        else
+        {
+            Vector3 lookDirection = transform.position;
+        }
+    }
 
-        if (transform.position.y < - 10)
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("FallDetector"))
         {
             Destroy(gameObject);
         }
