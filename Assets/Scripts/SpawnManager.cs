@@ -12,7 +12,7 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
-        SpawnEnemyWave(waveNumber);
+        WaitForRespawnWave();
         SpawnPowerUp();
     }
 
@@ -51,5 +51,11 @@ public class SpawnManager : MonoBehaviour
 
         Vector3 randomPos = new Vector3(spawnRangeX, 0, spawnRangeZ);
         return randomPos;
+    }
+
+    IEnumerator WaitForRespawnWave()
+    {
+        yield return new WaitForSeconds(1.5f);
+        SpawnEnemyWave(waveNumber);
     }
 }

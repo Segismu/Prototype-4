@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] Animator transition;
+
     PlayerController playerController;
     GameObject player;
     ScoreManager scoreManager;
@@ -30,7 +32,8 @@ public class GameManager : MonoBehaviour
     public IEnumerator RestartGame()
     {
         scoreManager.isScoreIncreasing = false;
-        yield return new WaitForSeconds(2);
+        transition.SetTrigger("start");
+        yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene(0);
         scoreManager.scoreCount = 0;
         spawnManager.enemyCount = 0;
